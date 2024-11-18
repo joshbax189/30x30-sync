@@ -106,10 +106,13 @@
         );
         return;
       } else {
+        const uploadData = JSON.parse(atob(window.location.hash.substr(1)));
+        const dates = Object.keys(uploadData);
         document.querySelector(
           ".MuiBox-root:first-child .MuiContainer-root",
         ).innerHTML +=
-          '<button style="position:fixed;top:5em;left:1em;" onclick="upload()">Upload to Capra</button>';
+          '<button onclick="upload()">Upload to Capra</button>' +
+          `<span>${dates.join()}</span>`;
       }
       break;
     default:
