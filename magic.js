@@ -46,6 +46,10 @@
           "https://30x30.capra.run/#" +
           btoa(JSON.stringify(globalThis.selectedData));
         window.open(url);
+        // after opening unselect checkboxes
+        document
+          .querySelectorAll(".do-sync:checked")
+          .forEach((x) => (x.checked = false));
       };
 
       // this will trigger upload
