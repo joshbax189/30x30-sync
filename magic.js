@@ -19,6 +19,8 @@
         )
           .toISOString()
           .split("T")[0];
+        let hideDist = row.querySelector(".hide-dist")?.checked;
+        dist = hideDist ? 0 : dist;
 
         // collate by same date
         if (date) {
@@ -52,7 +54,7 @@
         window.open(url);
         // after opening unselect checkboxes
         document
-          .querySelectorAll(".do-sync:checked")
+          .querySelectorAll(".capra:checked")
           .forEach((x) => (x.checked = false));
       };
 
@@ -66,7 +68,8 @@
         .forEach(
           (x) =>
             (x.innerHTML +=
-              '<label>sync to 30x30<input type="checkbox" class="do-sync"/></label>'),
+              '<label>sync to 30x30<input type="checkbox" class="capra do-sync"/></label>' +
+              '<label>hide dist<input type="checkbox" class="capra hide-dist"/></label>'),
         );
 
       break;
