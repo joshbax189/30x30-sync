@@ -1,9 +1,9 @@
 (() => {
   switch (location.host) {
     case "www.strava.com":
-      let selectedData = {};
+      globalThis.selectedData = {};
 
-      function copyData(elt) {
+      globalThis.copyData = (elt) => {
         // scrape the values
         let row = elt.parentElement.parentElement.parentElement;
         let [s, m, h] = row
@@ -23,23 +23,15 @@
 
         // collate by same date
         if (date) {
-          let existing = selectedData[date];
-          if (existing) {
-            selectedData[date] = {
-              time: existing.time + time,
-              dist: existing.dist + dist,
-            };
-          } else {
-            selectedData[date] = {
-              time,
-              dist,
-            };
-          }
+          let existing = globalThis.selectedData[date];
+          globalThis.selectedData[date] = {
+            time: (existing?.time || 0) + time,
+            dist: (existing?.dist || 0) + 1 * dist,
+          };
         }
-      }
+      };
 
-      // on button click
-      function openCapraUrl() {
+      globalThis.openCapraUrl = () => {
         let selected = document.querySelectorAll(".do-sync:checked");
 
         if (selected.length == 0) {
@@ -48,13 +40,14 @@
         }
 
         // ensure no duplicates or stale data
-        selectedData = {};
+        globalThis.selectedData = {};
         selected.forEach(copyData);
 
         const url =
-          "https://30x30.capra.run/#" + btoa(JSON.stringify(selectedData));
+          "https://30x30.capra.run/#" +
+          btoa(JSON.stringify(globalThis.selectedData));
         window.open(url);
-      }
+      };
 
       // this will trigger upload
       document.querySelector(".page.container").innerHTML +=
@@ -72,7 +65,7 @@
 
       break;
     case "30x30.capra.run":
-      function upload() {
+      globalThis.upload = () => {
         const uploadData = JSON.parse(atob(window.location.hash.substr(1)));
 
         let i = 1;
@@ -107,7 +100,7 @@
             alert("updated the following dates: " + res.join());
           });
         }
-      }
+      };
 
       if (!location.hash) {
         alert(
@@ -118,7 +111,7 @@
         document.querySelector(
           ".MuiBox-root:first-child .MuiContainer-root",
         ).innerHTML +=
-          '<button style="position:fixed;top:5em;left:1em;" onclick="openCapraUrl()">Upload to Capra</button>';
+          '<button style="position:fixed;top:5em;left:1em;" onclick="upload()">Upload to Capra</button>';
       }
       break;
     default:
