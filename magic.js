@@ -11,10 +11,9 @@
           .textContent.split(":")
           .reverse();
         let time = (h || 0) * 60 + 1 * m;
-        let dist = row
-          .querySelector(".col-dist")
-          .textContent.trim()
-          .split("\n")[0];
+        let dist = Number.parseFloat(
+          row.querySelector(".col-dist").textContent.trim().split("\n")[0],
+        );
         let date = new Date(
           row.querySelector(".col-date").textContent.split(" ")[1].split("/"),
         )
@@ -26,7 +25,7 @@
           let existing = globalThis.selectedData[date];
           globalThis.selectedData[date] = {
             time: (existing?.time || 0) + time,
-            dist: (existing?.dist || 0) + 1 * dist,
+            dist: (existing?.dist || 0) + dist,
           };
         }
       };
@@ -54,7 +53,6 @@
         '<button style="position:fixed;top:5em;right:5em;" onclick="openCapraUrl()">Upload to Capra</button>';
 
       // inject
-      // TODO this must happen AFTER activities are loaded!
       document
         .querySelectorAll("tbody .col-actions")
         .forEach(
