@@ -94,10 +94,10 @@
             }),
           );
           i++;
-          Promise.all(promises).then((res) => {
-            alert("updated the following dates: " + res.join());
-          });
         }
+        Promise.all(promises).then((res) => {
+          alert("updated the following dates: " + res.join());
+        });
       };
 
       if (!location.hash) {
