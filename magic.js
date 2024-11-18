@@ -22,6 +22,10 @@
 
         // collate by same date
         if (date) {
+          if (!date.startsWith("2024-11")) {
+            alert("ignored activity " + date);
+            return;
+          }
           let existing = globalThis.selectedData[date];
           globalThis.selectedData[date] = {
             time: (existing?.time || 0) + time,
