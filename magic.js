@@ -12,7 +12,8 @@
           .reverse();
         let time = (h || 0) * 60 + 1 * m;
         let dist = Number.parseFloat(
-          row.querySelector(".col-dist").textContent.trim().split("\n")[0],
+          // 10 = char code for \n, this is filtered out of the bookmark url
+          row.querySelector(".col-dist").textContent.trim().split(10)[0],
         );
         let date = new Date(
           row.querySelector(".col-date").textContent.split(" ")[1].split("/"),
